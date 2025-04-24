@@ -1,64 +1,49 @@
+---
+config:
+  theme: neo-dark
+---
 erDiagram
-    %% Requirement 1: Normalized Tables (2NF or higher)
-    historical_cases {
-        int case_id PK
-        string name
-        string time_period
-        string country
-        string outcome
-        string key_lessons
+    "Past Events" {
+        int event_id PK
+        string "Event Name"
+        string "Time Period"
+        string "Country"
+        string "Outcome"
+        string "Key Lessons"
     }
-    
-    resistance_tactics {
+    "Ways of Resisting" {
         int tactic_id PK
-        string name
-        int effectiveness
-        int case_id FK
+        string "Method Name"
+        int Effectiveness
+        int event_id FK
     }
-    
-    policy_recommendations {
-        int policy_id PK
-        string name
-        string country
-        int success_probability
-        int historical_case_id FK
+    "Future Ideas" {
+        int idea_id PK
+        string "Idea Name"
+        string "Country"
+        int "Success Probability"
+        int event_id FK
     }
-    
-    organizations {
-        int org_id PK
-        string name
-        string focus_area
-        string contact
+    "Groups Involved" {
+        int group_id PK
+        string "Group Name"
+        string "Focus Area"
+        string "Contact Info"
     }
-    
-    tactical_guides {
+    "How-To Guides" {
         int guide_id PK
-        string title
-        string risk_level
-        int org_id FK
+        string "Guide Title"
+        string "Risk Level"
+        int group_id FK
     }
-    
-    org_policy_support {
-        int org_id FK
-        int policy_id FK
-        string support_level
+    "Group Support for Ideas" {
+        int group_id FK
+        int idea_id FK
+        string "Support Level"
     }
-    
-    %% Requirement 2: Stored Procedures
-    %% Example: Insert, Update, Delete, and Retrieve meaningful data
-    %% 1. Insert/Update Procedure for `historical_cases`
-    %% 2. Retrieve Procedure for joining `historical_cases` and `resistance_tactics`
-    %% 3. Delete Procedure for `policy_recommendations`
 
-    %% Requirement 3: Views
-    %% Example Views:
-    %% 1. Summarize metrics (e.g., count of resistance tactics per historical case)
-    %% 2. Join multiple tables (e.g., policy recommendations and supporting organizations)
-
-    %% Relationships
-    historical_cases ||--o{ resistance_tactics : has
-    historical_cases ||--o{ policy_recommendations : suggests
-    
-    organizations ||--o{ tactical_guides : publishes
-    organizations ||--o{ org_policy_support : supports
-    policy_recommendations ||--o{ org_policy_support : supported by
+    "Past Events" ||--o{ "Ways of Resisting" : has
+    "Past Events" ||--o{ "Future Ideas" : suggests
+    "Groups Involved" ||--o{ "How-To Guides" : publishes
+    "Groups Involved" ||--o{ "Group Support for Ideas" : provides support
+    "Future Ideas" ||--o{ "Group Support for Ideas" : is supported by
