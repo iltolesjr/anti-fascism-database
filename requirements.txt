@@ -1,0 +1,20 @@
+Flask==2.3.2
+```
+
+If you plan to use additional libraries (e.g., for database management or other features), include them as well. For example:
+
+````plaintext
+Flask==2.3.2
+sqlite3
+```
+
+### Update the README
+Ensure your `README.md` includes instructions for installing dependencies using the `requirements.txt` file. For example:
+
+````markdown
+## Setup Instructions
+
+1. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```

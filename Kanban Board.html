@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .board { display: flex; gap: 20px; }
+        .column { width: 30%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        .task { padding: 10px; margin: 5px 0; background: #f4f4f4; border: 1px solid #ddd; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>Kanban Board</h1>
+    <div class="board">
+        <div class="column" id="todo">
+            <h2>To Do</h2>
+        </div>
+        <div class="column" id="in-progress">
+            <h2>In Progress</h2>
+        </div>
+        <div class="column" id="done">
+            <h2>Done</h2>
+        </div>
+    </div>
+    <script>
+        const tasks = [
+            { id: 1, task: "Research defensive tactics", status: "To Do" },
+            { id: 2, task: "Organize public outreach", status: "In Progress" },
+            { id: 3, task: "Evaluate outcomes", status: "Done" }
+        ];
+
+        tasks.forEach(task => {
+            const column = document.getElementById(task.status.toLowerCase().replace(' ', '-'));
+            const taskElement = document.createElement('div');
+            taskElement.className = 'task';
+            taskElement.textContent = task.task;
+            column.appendChild(taskElement);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background-color: #f4f4f4;
+        }
+
+        .kanban-board {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .column {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 300px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .column h2 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .task {
+            background: #e3f2fd;
+            border: 1px solid #90caf9;
+            border-radius: 3px;
+            padding: 10px;
+            margin-bottom: 10px;
+            cursor: grab;
+        }
+
+        .task:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="kanban-board">
+        <div class="column" id="todo">
+            <h2>To Do</h2>
+            <div class="task" draggable="true">Task 1</div>
+            <div class="task" draggable="true">Task 2</div>
+        </div>
+        <div class="column" id="in-progress">
+            <h2>In Progress</h2>
+        </div>
+        <div class="column" id="done">
+            <h2>Done</h2>
+        </div>
+    </div>
+
+    <script>
+        const tasks = document.querySelectorAll('.task');
+        const columns = document.querySelectorAll('.column');
+
+        tasks.forEach(task => {
+            task.addEventListener('dragstart', () => {
+                task.classList.add('dragging');
+            });
+
+            task.addEventListener('dragend', () => {
+                task.classList.remove('dragging');
+            });
+        });
+
+        columns.forEach(column => {
+            column.addEventListener('dragover', e => {
+                e.preventDefault();
+                const draggingTask = document.querySelector('.dragging');
+                column.appendChild(draggingTask);
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,52 +1,74 @@
-erDiagram
-    historical_cases {
-        int case_id PK
-        string name
-        string time_period
-        string country
-        string outcome
-        string key_lessons
-    }
-    
-    resistance_tactics {
-        int tactic_id PK
-        string name
-        int effectiveness
-        int case_id FK
-    }
-    
-    policy_recommendations {
-        int policy_id PK
-        string name
-        string country
-        int success_probability
-        int historical_case_id FK
-    }
-    
-    organizations {
-        int org_id PK
-        string name
-        string focus_area
-        string contact
-    }
-    
-    tactical_guides {
-        int guide_id PK
-        string title
-        string risk_level
-        int org_id FK
-    }
-    
-    historical_cases ||--o{ resistance_tactics : has
-    historical_cases ||--o{ policy_recommendations : suggests
-    
-    organizations ||--o{ tactical_guides : publishes
-    
-    organizations ||--o{ org_policy_support : supports
-    policy_recommendations ||--o{ org_policy_support : supported by
-    
-    org_policy_support {
-        int org_id FK
-        int policy_id FK
-        string support_level
-    }
+
+// [MermaidChart: 92e62afb-9f90-4478-b267-129c4597bcd7]
+To turn your `erDiagram` code into a flowchart or diagram, you can use a tool like [Mermaid.js](https://mermaid-js.github.io/mermaid/#/) or an ERD-specific tool like [dbdiagram.io](https://dbdiagram.io/). Since your code is already in a format similar to Mermaid.js, you can directly use it with Mermaid.
+
+Here’s how you can proceed:
+
+1. **Use Mermaid Live Editor**:
+    - Go to [Mermaid Live Editor](https://mermaid-js.github.io/mermaid-live-editor/).
+    - Paste your `erDiagram` code into the editor.
+    - The diagram will be rendered automatically.
+
+2. **Embed in Markdown**:
+    If you want to embed the diagram in a Markdown file, you can use the following syntax:
+    ```markdown
+    ```mermaid
+    erDiagram
+         historical_cases {
+              int case_id PK
+              string name
+              string time_period
+              string country
+              string outcome
+              string key_lessons
+         }
+         
+         resistance_tactics {
+              int tactic_id PK
+              string name
+              int effectiveness
+              int case_id FK
+         }
+         
+         policy_recommendations {
+              int policy_id PK
+              string name
+              string country
+              int success_probability
+              int historical_case_id FK
+         }
+         
+         organizations {
+              int org_id PK
+              string name
+              string focus_area
+              string contact
+         }
+         
+         tactical_guides {
+              int guide_id PK
+              string title
+              string risk_level
+              int org_id FK
+         }
+         
+         historical_cases ||--o{ resistance_tactics : has
+         historical_cases ||--o{ policy_recommendations : suggests
+         
+         organizations ||--o{ tactical_guides : publishes
+         
+         organizations ||--o{ org_policy_support : supports
+         policy_recommendations ||--o{ org_policy_support : supported by
+         
+         org_policy_support {
+              int org_id FK
+              int policy_id FK
+              string support_level
+         }
+    ```
+    ```
+
+3. **Export as Image**:
+    - Once rendered in the Mermaid Live Editor, you can export the diagram as an image (PNG/SVG) or copy it for use in presentations or documentation.
+
+Let me know if you need further assistance!
