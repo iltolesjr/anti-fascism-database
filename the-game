@@ -230,3 +230,142 @@ def upheaval_mode():
     for species in ecosystem.species.values():
         species.morale = max(0.0, species.morale - 0.4)
 Visualize: Use Pygame to draw a simple grid showing resource distribution.
+
+
+Here is the complete setup for your social simulation game environment using the instructions you provided. I've structured the code for you to copy-paste and run with minimal setup.
+
+### Step 1: Create the Dockerfile
+Save this as `Dockerfile` in your project directory:
+```dockerfile
+# Use lightweight Python image
+FROM python:3.9-slim
+
+# Install system dependencies (if needed)
+RUN apt-get update && apt-get install -y \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy your game code
+COPY . .
+
+# Run the simulation script
+CMD ["python", "ecosystem.py"]
+```
+
+---
+
+### Step 2: Create the requirements.txt
+Save this as `requirements.txt` in the same directory:
+```
+numpy
+pandas
+pygame
+```
+
+---
+
+### Step 3: Create the Python Simulation Code
+Save this as `ecosystem.py` in the same directory:
+```python
+import numpy as np
+
+class Species:
+    def __init__(self, name, privilege=1.0, morale=0.5):
+        self.name = name
+        self.privilege = privilege  # Resource access multiplier
+        self.morale = morale        # 0.0 to 1.0
+
+class Ecosystem:
+    def __init__(self):
+        self.species = {
+            "Skyfolk": Species("Skyfolk", privilege=1.2),
+            "Burrowers": Species("Burrowers", privilege=0.8)
+        }
+        self.resources = 100.0  # Total shared resources
+
+    def update(self):
+        # Dynamic resource allocation based on privilege
+        for name, species in self.species.items():
+            share = self.resources * species.privilege / sum(s.privilege for s in self.species.values())
+            species.morale = min(1.0, share / (self.resources / len(self.species)))
+
+        # Example consequence: Resource collapse if morale too low
+        if any(s.morale < 0.3 for s in self.species.values()):
+            self.resources *= 0.9  # Depletion
+
+    def print_state(self):
+        print(f"\nResources: {self.resources:.1f}")
+        for name, species in self.species.items():
+            print(f"{name}: Privilege={species.privilege:.1f}, Morale={species.morale:.2f}")
+
+# Run simulation
+eco = Ecosystem()
+for day in range(10):
+    print(f"\n--- Day {day} ---")
+    eco.update()
+    eco.print_state()
+
+    # Example "policy change" (Skyfolk grab more)
+    if day == 3:
+        eco.species["Skyfolk"].privilege = 1.5
+        print("\n>>> POLICY CHANGE: Skyfolk gain privilege!")
+
+# Optional: "Upheaval Mode"
+def upheaval_mode():
+    print("\nUPHEAVAL MODE ACTIVATED!")
+    for species in eco.species.values():
+        species.morale = max(0.0, species.morale - 0.4)
+
+# You can uncomment this to test
+# upheaval_mode()
+# eco.print_state()
+```
+
+---
+
+### Step 4: Build and Run the Docker Container
+Run the following commands in your terminal:
+```bash
+# Build the Docker image
+docker build -t ecosystem-game .
+
+# Run the container
+docker run -it --rm ecosystem-game
+```
+
+---
+
+### Option 2: Run Without Docker
+If you prefer to run the script directly without Docker, follow these steps:
+
+1. Install Python 3.9+.
+2. Run the following commands to install dependencies:
+   ```bash
+   pip install numpy pandas pygame
+   ```
+3. Execute the script:
+   ```bash
+   python ecosystem.py
+   ```
+
+---
+
+### What This Does
+1. Simulates "Skyfolk" and "Burrowers" with different privileges and morale levels.
+2. Allocates resources dynamically based on privilege.
+3. Implements a simple consequence system where low morale depletes resources.
+4. Demonstrates a "policy change" on Day 3 where Skyfolk gain more privilege.
+5. Includes an optional "Upheaval Mode" for disruptions.
+
+---
+
+Let me know if you need additional features or guidance!
