@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Protocol Initiation</title>
+<style>
+:root {
+  --primary: #2A2A2A;
+  --accent: #E74C3C;
+  --text: #333;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.diagram-container {
+  text-align: center;
+  perspective: 1000px;
+}
+
+.shield-wrapper {
+  position: relative;
+  margin: 2rem 0;
+}
+
+.shield-icon {
+  font-size: 4.5rem;
+  color: var(--accent);
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  transition: var(--transition);
+}
+
+.protocol-steps {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.protocol-steps::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent) 0%, #FF6B6B 100%);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+  transition: var(--transition);
+}
+
+.step:hover {
+  background: #f8f9fa;
+  transform: translateX(10px);
+}
+
+.step-icon {
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+  color: white;
+}
+
+.start-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--accent) 0%, #FF6B6B 100%);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.start-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(231, 76, 60, 0.4);
+}
+
+.start-button::after {
+  content: '→';
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.start-button:hover::after {
+  transform: translateX(4px);
+}
+
+.protocol-text {
+  color: var(--text);
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+</style>
+</head>
+<body>
+<div class="diagram-container">
+  <div class="shield-wrapper">
+    <div class="shield-icon floating">🛡️</div>
+  </div>
+  
+  <div class="protocol-steps">
+    <div class="step">
+      <div class="step-icon">😷</div>
+      <div>
+        <h3 class="protocol-text">MASK UP</h3>
+        <p class="protocol-text">Anonymous physical protection protocol</p>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-icon">🔒</div>
+      <div>
+        <h3 class="protocol-text">SECURE IDs</h3>
+        <p class="protocol-text">Digital identity protection measures</p>
+      </div>
+    </div>
+    
+    <div class="step">
+      <div class="step-icon">🌐</div>
+      <div>
+        <h3 class="protocol-text">OFF-GRID</h3>
+        <p class="protocol-text">Decentralized operational security</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="start-button">
+    <span>Initiate Protocol</span>
+  </button>
+</div>
+</body>
+</html>
